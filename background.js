@@ -1,30 +1,28 @@
-let blockUrls = [];
-
-// retrieve from options
-chrome.storage.sync.get({
-  urls: [],
-}, function(items) {
-  console.debug(items);
-  blockUrls = items.urls.split("\n").filter(url => {
-    return !(url == '' || url.startsWith('// '));  
+function createUrlList(text) {
+  const urls = text.split("\n").filter(url => {
+    return !(url == '' || url.startsWith('//'));
   });
-  console.debug(blockUrls);
-});
+  console.debug(urls);
+  return urls;
+}
 
-function shouldBlock(url, blockUrls) {
-  for (const burl of blockUrls) {
-    if (url.startsWith(burl)) {
+function contains(url, urls) {
+  for (const u of urls) {
+    if (url.startsWith(u)) {
       return true;
     }
   }
   return false;
 }
 
-function onVisited(result) {
-  if (shouldBlock(result.url, blockUrls)) {
-    // Doesn’t affect navigation. It seems there is no way to remove the current session "go back" items?
-    chrome.history.deleteUrl({url: result.url});
-  }
-}
-chrome.history.onVisited.addListener(onVisited);
+// Doesn’t affect navigation. It seems there is no way to remove the current session "go back" items?
+function init(items) {
+  const urls = createUrlList(items.urls);
+  chrome.history.onVisited.addListener(result => {
+    if (contains(result.url, urls)) {
+      chrome.history.deleteUrl({url: result.url});
+    }
+  });
+};
 
+chrome.storage.sync.get("urls", init);
