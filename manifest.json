@@ -1,0 +1,19 @@
+{
+  "name": "Occasionally suppress history",
+  "version": "1.0",
+  "description": "Blocks selected URLs from showing up in history.",
+  "permissions": [
+    "history",
+    "storage"
+  ],
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "manifest_version": 2
+}
