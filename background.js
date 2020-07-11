@@ -1,19 +1,3 @@
-function createUrlList(text) {
-  const urls = text.split("\n").filter(url => {
-    return !(url == '' || url.startsWith('//'));
-  });
-  return urls;
-}
-
-function listContains(url, urls) {
-  for (const u of urls) {
-    if (url.startsWith(u)) {
-      return true;
-    }
-  }
-  return false;
-}
-
 function createUrlTrie(text) {
   const root = {};
   let curNode = root;
@@ -50,7 +34,7 @@ function init(items) {
   });
 };
 
-//chrome.storage.sync.get("urls", init);
+chrome.storage.sync.get("urls", init);
 
 /*
 let t = `// One URL per line
