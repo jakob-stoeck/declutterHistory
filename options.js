@@ -1,13 +1,9 @@
 // Saves options to chrome.storage
-const defaultText = `// One URL per line
-// Matches all URLs beginning with this
-// https://example.com/ matches all sub pages
-`;
+const defaultText = ''; 
+
 function save_options() {
   var urls = document.getElementById('urls').value;
-  chrome.storage.sync.set({
-    urls: urls,
-  }, function() {
+  chrome.storage.sync.set({ urls: urls }, function() {
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
     status.textContent = 'Options saved.';

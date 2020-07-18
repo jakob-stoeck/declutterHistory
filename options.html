@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html>
-<head><title>Occasionally suppress URLs Extension Options</title></head>
+<head><title>Declutter Browser History</title></head>
 <body>
+  <label for="urls">URLs</label>
+  <p>One URL per line. Matches all URLs beginning with this, e.g. 'https://example.com/' matches all sub pages on example.com.</p>
+  <textarea placeholder="https://www.example.com/
+https://app.slack.com/
+https://news.ycombinator.com/item?
+..." cols="70" rows="30" id="urls" name="urls"></textarea>
 
-<label>
-URLs
-<textarea cols="70" rows="30" id="urls">
-// One URL per line
-// Matches all URLs beginning with this
-// https://example.com/ matches all sub pages
-</textarea>
+  <div id="status"></div>
+  <button id="save">Save</button>
 
-<div id="status"></div>
-<button id="save">Save</button>
-
-<script src="options.js"></script>
+  <script src="options.js"></script>
 </body>
 </html>
 
