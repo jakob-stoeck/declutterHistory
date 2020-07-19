@@ -24,19 +24,23 @@ function trieContains(url, trie) {
   return false;
 }
 
-// Doesn’t affect navigation. It seems there is no way to remove the current session "go back" items?
-function init(items) {
-  const urls = createUrlTrie(items.urls);
-  chrome.history.onVisited.addListener(result => {
-    if (trieContains(result.url, urls)) {
-      chrome.history.deleteUrl({url: result.url});
-    }
-  });
-};
+var urls = {};
 
-chrome.storage.sync.get("urls", init);
+chrome.storage.sync.get("urls", items => {
+  if (items.urls) {
+    urls = createUrlTrie(items.urls);
+  }
+});
+
+chrome.history.onVisited.addListener(result => {
+  if (trieContains(result.url, urls)) {
+    chrome.history.deleteUrl({url: result.url});
+  }
+});
 
 /*
+// TESTS
+
 let t = `// One URL per line
 // Matches all URLs beginning with this
 // https://example.com/ matches all sub pages
